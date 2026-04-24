@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HTML — คู่มือครบจบ (รวม Emmet + HTML5 Features) | Apcl$21</title>
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Courier New", Courier, monospace;
+  background-color: #f0f0f0;
+  color: #1A1A1A;
+  font-size: 14px;
+  line-height: 1.75;
+  position: relative;
+}
+
+.watermark {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('file_000000005a487208893697e196779b71.png');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+  opacity: 0.4;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.content-layer {
+  position: relative;
+  z-index: 1;
+}
+
+/* HEADER — ปรับพื้นหลังให้สีเท่ากับ main และ sidebar (ไม่จาง ไม่เบลอ) */
+.doc-header {
+  padding: 32px 0 24px 0;
+  background-color: rgba(255, 255, 255, 0.9);
+  backdrop-filter: none;
+}
+.header-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 60px;
+  text-align: center;
+}
+
+/* ----- โลโก้แบบไม่มีวงรี สีดำปกติ ----- */
+.logo-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  margin-bottom: 12px;
+  cursor: default;
+}
+.logo-img {
+  height: 36px;
+  width: auto;
+  opacity: 0.9;
+  filter: none;
+}
+.brand {
+  font-size: 24px;
+  font-weight: 700;
+  color: #000000;
+  letter-spacing: 2px;
+  opacity: 1;
+}
+.logo-wrapper:hover .logo-img {
+  opacity: 1;
+}
+.logo-wrapper:hover .brand {
+  color: #000000;
+}
+
+/* หัวข้ออื่น ๆ */
+.doc-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1A1A1A;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+.doc-meta {
+  color: #555555;
+  font-size: 13px;
+}
+
+/* LAYOUT และส่วนอื่น ๆ ทั้งหมด ไม่เปลี่ยนแปลง */
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+.sidebar {
+  width: 280px;
+  flex-shrink: 0;
+  border-right: none;
+  padding: 32px 0 32px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  background-color: rgba(255, 255, 255, 0.9);
+}
+.sidebar-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #888888;
+  padding: 0 24px 12px;
+  border-bottom: none;
+  margin-bottom: 8px;
+  display: block;
+}
+.sidebar a {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 7px 24px;
+  color: #1A1A1A;
+  text-decoration: none;
+  font-size: 13px;
+  border-left: none;
+  transition: all 0.15s;
+}
+.sidebar a:hover {
+  background: #EEEEEE;
+  color: #000000;
+}
+.sidebar a .n {
+  font-weight: 700;
+  color: #888888;
+  font-size: 11px;
+  min-width: 24px;
+}
+
+.main {
+  flex: 1;
+  padding: 40px 60px 60px 60px;
+  max-width: calc(100% - 280px);
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+.section { margin-bottom: 44px; }
+.sec-heading {
+  background: #000000;
+  color: #FFFFFF;
+  font-size: 18px;
+  font-weight: 700;
+  padding: 12px 22px;
+  letter-spacing: 1px;
+  margin-bottom: 0;
+}
+.sec-body { padding: 24px 0 0; }
+.sub-title {
+  font-weight: 700;
+  margin: 20px 0 10px;
+  padding-left: 16px;
+  border-left: 3px solid #000000;
+}
+.sub-title::before { content: "▶ "; color: #555555; font-size: 11px; }
+
+.tbl-wrap { overflow-x: auto; margin: 12px 0 16px; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  background-color: rgba(255, 255, 255, 0.95);
+}
+thead tr { background: #000000; color: #FFFFFF; }
+th, td {
+  padding: 8px 12px;
+  border: 1px solid #BBBBBB;
+  text-align: left;
+  vertical-align: top;
+}
+tbody tr:nth-child(even) { background: rgba(238, 238, 238, 0.9); }
+
+pre {
+  background: #1E1E1E;
+  color: #D4D4D4;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 13px;
+  line-height: 1.65;
+  padding: 20px 24px;
+  margin: 12px 0 16px;
+  overflow-x: auto;
+  position: relative;
+}
+pre::after {
+  content: "html";
+  position: absolute;
+  top: 8px; right: 14px;
+  font-size: 10px;
+  color: #888888;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+code {
+  font-family: "Courier New", Courier, monospace;
+  background: #EEEEEE;
+  padding: 2px 6px;
+  border: 1px solid #BBBBBB;
+}
+pre code { background: none; border: none; padding: 0; color: inherit; }
+
+.tag { color: #569CD6; }
+.atr { color: #9CDCFE; }
+.str { color: #CE9178; }
+.cmt { color: #6A9955; font-style: italic; }
+
+.note {
+  border-left: 3px solid #000000;
+  background: rgba(238, 238, 238, 0.9);
+  padding: 10px 16px;
+  margin: 12px 0;
+}
+
+.doc-footer {
+  border-top: 1px solid #BBBBBB;
+  padding: 24px 56px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  font-size: 12px;
+  color: #888888;
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+@media (max-width: 680px) {
+  .layout { flex-direction: column; }
+  .sidebar { width: 100%; border-right: none; height: auto; position: static; }
+  .main { max-width: 100%; padding: 20px; }
+  .header-container { padding: 0 20px; }
+  .doc-footer { padding: 24px 20px; }
+}
+</style>
+</head>
+<body>
+<div class="watermark"></div>
+
+<div class="content-layer">
+  <header class="doc-header">
+    <div class="header-container">
+      <div class="logo-wrapper">
+        <img class="logo-img" src="file_000000005a487208893697e196779b71.png" alt="Apcl21 Logo" onerror="this.src='https://via.placeholder.com/36?text=Apcl'">
+        <span class="brand">Apcl$21</span>
+      </div>
+      <div class="doc-title">HTML — คู่มือครบจบ (ฉบับสมบูรณ์)</div>
+      <div class="doc-meta">ภาษา markup สำหรับโครงสร้างเว็บ — ทำงานร่วมกับ CSS และ JavaScript + Emmet + HTML5 Features</div>
+    </div>
+  </header>
+
+  <div class="layout">
+    <nav class="sidebar">
+      <span class="sidebar-label">📖 สารบัญ</span>
+      <a href="#s1"><span class="n">01</span>HTML Element</a>
+      <a href="#s2"><span class="n">02</span>Document Structure</a>
+      <a href="#s3"><span class="n">03</span>HTML Tag</a>
+      <a href="#s4"><span class="n">04</span>HTML Attributes</a>
+      <a href="#s5"><span class="n">05</span>Self-Closing Elements</a>
+      <a href="#s6"><span class="n">06</span>Semantic Elements</a>
+      <a href="#s7"><span class="n">07</span>Heading Tags</a>
+      <a href="#s8"><span class="n">08</span>Anchor &amp; Image</a>
+      <a href="#s9"><span class="n">09</span>Class &amp; ID</a>
+      <a href="#s10"><span class="n">10</span>List Tags</a>
+      <a href="#s11"><span class="n">11</span>Table</a>
+      <a href="#s12"><span class="n">12</span>Form &amp; Input</a>
+      <a href="#s13"><span class="n">13</span>&lt;div&gt; &amp; &lt;span&gt;</a>
+      <a href="#s14"><span class="n">14</span>Inline vs Block Elements</a>
+      <a href="#s15"><span class="n">15</span>Text Formatting</a>
+      <a href="#s16"><span class="n">16</span>Media Elements</a>
+      <a href="#s17"><span class="n">17</span>Meta Tags (SEO)</a>
+      <a href="#s18"><span class="n">18</span>Special Characters</a>
+      <a href="#s19"><span class="n">19</span>HTML Entities</a>
+      <a href="#s20"><span class="n">20</span>Best Practices</a>
+      <a href="#s21"><span class="n">21</span>Emmet for HTML</a>
+      <a href="#s22"><span class="n">22</span>HTML5 Features</a>
+    </nav>
+
+    <div class="main">
+      <!-- SECTION 1 -->
+      <div class="section" id="s1">
+        <div class="sec-heading">1. HTML Element คืออะไร?</div>
+        <div class="sec-body">
+          <p>HTML Element คือหน่วยพื้นฐานของหน้าเว็บ ประกอบด้วย Tag เปิด เนื้อหา และ Tag ปิด</p>
+          <pre><span class="tag">&lt;a&gt;</span>…<span class="tag">&lt;/a&gt;</span></pre>
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr><th>คุณสมบัติ</th><th>รายละเอียด</th></tr></thead>
+              <tbody>
+                <tr><td>สร้างโดย</td><td>Tim Berners-Lee (1991)</td></tr>
+                <tr><td>มาตรฐาน</td><td>W3C / WHATWG (HTML5 → Living Standard)</td></tr>
+                <tr><td>ไฟล์</td><td>.html หรือ .htm</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 2 -->
+      <div class="section" id="s2">
+        <div class="sec-heading">2. HTML Document Structure</div>
+        <div class="sec-body">
+          <pre><span class="cmt">&lt;!DOCTYPE html&gt;</span>
+<span class="tag">&lt;html</span> <span class="atr">lang</span>=<span class="str">"th"</span><span class="tag">&gt;</span>
+<span class="tag">&lt;head&gt;</span>
+  <span class="tag">&lt;meta</span> <span class="atr">charset</span>=<span class="str">"UTF-8"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;meta</span> <span class="atr">name</span>=<span class="str">"viewport"</span> <span class="atr">content</span>=<span class="str">"width=device-width, initial-scale=1.0"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;title&gt;</span>ชื่อหน้าเว็บ<span class="tag">&lt;/title&gt;</span>
+<span class="tag">&lt;/head&gt;</span>
+<span class="tag">&lt;body&gt;</span>
+  <span class="cmt">&lt;!-- เนื้อหาอยู่ที่นี่ --&gt;</span>
+<span class="tag">&lt;/body&gt;</span>
+<span class="tag">&lt;/html&gt;</span></pre>
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr><th>Tag</th><th>คำอธิบาย</th></tr></thead>
+              <tbody>
+                <tr><td>&lt;!DOCTYPE html&gt;</td><td>บอก browser ว่าเป็น HTML5</td></tr>
+                <tr><td>&lt;html&gt;</td><td>Root element ของทุกหน้า</td></tr>
+                <tr><td>&lt;head&gt;</td><td>ข้อมูลของหน้าเว็บ (ไม่แสดงผล)</td></tr>
+                <tr><td>&lt;meta charset&gt;</td><td>กำหนดการเข้ารหัสตัวอักษร (รองรับภาษาไทย)</td></tr>
+                <tr><td>&lt;meta viewport&gt;</td><td>ทำให้รองรับมือถือ</td></tr>
+                <tr><td>&lt;title&gt;</td><td>ชื่อที่แสดงบน tab browser</td></tr>
+                <tr><td>&lt;body&gt;</td><td>เนื้อหาที่แสดงผลบนหน้าเว็บ</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 3 -->
+      <div class="section" id="s3">
+        <div class="sec-heading">3. HTML Tag</div>
+        <div class="sec-body">
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr><th>ประเภท Tag</th><th>ตัวอย่าง</th><th>คำอธิบาย</th></tr></thead>
+              <tbody>
+                <tr><td>Opening Tag</td><td><code>&lt;a&gt;</code></td><td>เริ่มต้น element</td></tr>
+                <tr><td>Closing Tag</td><td><code>&lt;/a&gt;</code></td><td>จบ element (มี / นำหน้า)</td></tr>
+                <tr><td>Content</td><td>ข้อความหรือ HTML</td><td>เนื้อหาอยู่ระหว่าง tag</td></tr>
+                <tr><td>Self‑Closing Tag</td><td><code>&lt;img&gt; &lt;br&gt; &lt;input&gt;</code></td><td>ไม่มี tag ปิด</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 4 -->
+      <div class="section" id="s4">
+        <div class="sec-heading">4. HTML Attributes</div>
+        <div class="sec-body">
+          <p>Attribute คือข้อมูลเพิ่มเติมที่ใส่ใน Opening Tag เพื่อกำหนดคุณสมบัติของ element</p>
+          <pre><span class="tag">&lt;a</span> <span class="atr">href</span>=<span class="str">"http://google.com/"</span> <span class="atr">target</span>=<span class="str">"_blank"</span> <span class="atr">title</span>=<span class="str">"Google"</span><span class="tag">&gt;</span>คลิกที่นี่<span class="tag">&lt;/a&gt;</span></pre>
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr><th>Attribute</th><th>ใช้กับ</th><th>คำอธิบาย</th></tr></thead>
+              <tbody>
+                <tr><td>href</td><td>&lt;a&gt;</td><td>ลิงก์ปลายทาง</td></tr>
+                <tr><td>src</td><td>&lt;img&gt;, &lt;script&gt;</td><td>ที่อยู่ไฟล์</td></tr>
+                <tr><td>alt</td><td>&lt;img&gt;</td><td>ข้อความแทนรูปภาพ</td></tr>
+                <tr><td>class</td><td>ทุก element</td><td>กำหนดกลุ่ม CSS</td></tr>
+                <tr><td>id</td><td>ทุก element</td><td>ชื่อเฉพาะของ element</td></tr>
+                <tr><td>style</td><td>ทุก element</td><td>กำหนด CSS ตรงๆ</td></tr>
+                <tr><td>target</td><td>&lt;a&gt;</td><td>_blank เปิดแท็บใหม่</td></tr>
+                <tr><td>type</td><td>&lt;input&gt;</td><td>ประเภทของ input</td></tr>
+                <tr><td>placeholder</td><td>&lt;input&gt;</td><td>ข้อความตัวอย่างใน input</td></tr>
+                <tr><td>disabled</td><td>&lt;input&gt;, &lt;button&gt;</td><td>ปิดใช้งาน element</td></tr>
+                <tr><td>required</td><td>&lt;input&gt;</td><td>บังคับกรอก</td></tr>
+                <tr><td>action</td><td>&lt;form&gt;</td><td>URL ที่รับข้อมูล form</td></tr>
+                <tr><td>method</td><td>&lt;form&gt;</td><td>GET หรือ POST</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 5 -->
+      <div class="section" id="s5">
+        <div class="sec-heading">5. Self-Closing Elements</div>
+        <div class="sec-body">
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr><th>Tag</th><th>ชื่อ</th><th>การใช้งาน</th></tr></thead>
+              <tbody>
+                <tr><td><code>&lt;br&gt;</code></td><td>Line Break</td><td>ขึ้นบรรทัดใหม่</td></tr>
+                <tr><td><code>&lt;hr&gt;</code></td><td>Horizontal Rule</td><td>เส้นแบ่งแนวนอน</td></tr>
+                <tr><td><code>&lt;img&gt;</code></td><td>Image</td><td>แสดงรูปภาพ</td></tr>
+                <tr><td><code>&lt;input&gt;</code></td><td>Input</td><td>ช่องกรอกข้อมูล</td></tr>
+                <tr><td><code>&lt;link&gt;</code></td><td>Link</td><td>เชื่อม CSS ภายนอก</td></tr>
+                <tr><td><code>&lt;meta&gt;</code></td><td>Metadata</td><td>ข้อมูลของหน้าเว็บ</td></tr>
+                <tr><td><code>&lt;source&gt;</code></td><td>Source</td><td>แหล่งที่มาของ media</td></tr>
+                <tr><td><code>&lt;embed&gt;</code></td><td>Embed</td><td>ฝัง media ภายนอก</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 6 -->
+      <div class="section" id="s6">
+        <div class="sec-heading">6. Semantic Elements</div>
+        <div class="sec-body">
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr><th>Tag</th><th>ความหมาย</th><th>การใช้งาน</th></tr></thead>
+              <tbody>
+                <tr><td>&lt;header&gt;</td><td>ส่วนหัว</td><td>โลโก้ เมนูด้านบน</td></tr>
+                <tr><td>&lt;nav&gt;</td><td>Navigation</td><td>เมนูนำทาง</td></tr>
+                <tr><td>&lt;main&gt;</td><td>เนื้อหาหลัก</td><td>เนื้อหาสำคัญของหน้า</td></tr>
+                <tr><td>&lt;section&gt;</td><td>ส่วน</td><td>แบ่งเนื้อหาเป็นกลุ่ม</td></tr>
+                <tr><td>&lt;article&gt;</td><td>บทความ</td><td>เนื้อหาที่อยู่ได้ด้วยตัวเอง</td></tr>
+                <tr><td>&lt;aside&gt;</td><td>ด้านข้าง</td><td>Sidebar เนื้อหาเสริม</td></tr>
+                <tr><td>&lt;footer&gt;</td><td>ส่วนท้าย</td><td>ลิขสิทธิ์ ข้อมูลติดต่อ</td></tr>
+                <tr><td>&lt;figure&gt;/&lt;figcaption&gt;</td><td>รูป/แผนภาพ</td><td>ห่อหุ้มรูปภาพและคำอธิบาย</td></tr>
+                <tr><td>&lt;mark&gt;</td><td>ไฮไลท์</td><td>เน้นข้อความ</td></tr>
+                <tr><td>&lt;details&gt;/&lt;summary&gt;</td><td>รายละเอียด</td><td>ซ่อน/แสดงเนื้อหา</td></tr>
+                <tr><td>&lt;time&gt;</td><td>เวลา</td><td>วันที่และเวลา</td></tr>
+                <tr><td>&lt;dialog&gt;</td><td>Dialog</td><td>Popup / modal (HTML ใหม่)</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 7 -->
+      <div class="section" id="s7">
+        <div class="sec-heading">7. Heading Tags</div>
+        <div class="sec-body">
+          <pre><span class="tag">&lt;h1&gt;</span>หัวข้อใหญ่ที่สุด<span class="tag">&lt;/h1&gt;</span>
+<span class="tag">&lt;h2&gt;</span>หัวข้อรอง<span class="tag">&lt;/h2&gt;</span>
+<span class="tag">&lt;h3&gt;</span>หัวข้อย่อย<span class="tag">&lt;/h3&gt;</span>
+<span class="tag">&lt;h4&gt;</span>หัวข้อย่อยลงไป<span class="tag">&lt;/h4&gt;</span>
+<span class="tag">&lt;h5&gt;</span>หัวข้อย่อยมาก<span class="tag">&lt;/h5&gt;</span>
+<span class="tag">&lt;h6&gt;</span>หัวข้อเล็กที่สุด<span class="tag">&lt;/h6&gt;</span></pre>
+          <div class="note">📌 ควรมี H1 แค่ 1 อันต่อหน้า เพื่อ SEO ที่ดี</div>
+        </div>
+      </div>
+
+      <!-- SECTION 8 -->
+      <div class="section" id="s8">
+        <div class="sec-heading">8. Anchor &amp; Image Tags</div>
+        <div class="sec-body">
+          <div class="sub-title">Anchor &lt;a&gt; — สร้างลิงก์</div>
+          <pre><span class="tag">&lt;a</span> <span class="atr">href</span>=<span class="str">"https://google.com"</span><span class="tag">&gt;</span>ไปที่ Google<span class="tag">&lt;/a&gt;</span>
+<span class="tag">&lt;a</span> <span class="atr">href</span>=<span class="str">"about.html"</span><span class="tag">&gt;</span>หน้าเกี่ยวกับเรา<span class="tag">&lt;/a&gt;</span>
+<span class="tag">&lt;a</span> <span class="atr">href</span>=<span class="str">"#section1"</span><span class="tag">&gt;</span>ไปที่ Section 1<span class="tag">&lt;/a&gt;</span>
+<span class="tag">&lt;a</span> <span class="atr">href</span>=<span class="str">"mailto:email@gmail.com"</span><span class="tag">&gt;</span>ส่งอีเมล<span class="tag">&lt;/a&gt;</span>
+<span class="tag">&lt;a</span> <span class="atr">href</span>=<span class="str">"tel:0812345678"</span><span class="tag">&gt;</span>โทรหาเรา<span class="tag">&lt;/a&gt;</span></pre>
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr><th>Attribute</th><th>ค่า</th><th>คำอธิบาย</th></tr></thead>
+              <tbody>
+                <tr><td>href</td><td>URL</td><td>ลิงก์ปลายทาง</td></tr>
+                <tr><td>target</td><td>_blank</td><td>เปิดแท็บใหม่</td></tr>
+                <tr><td>target</td><td>_self</td><td>เปิดในแท็บเดิม (default)</td></tr>
+                <tr><td>title</td><td>ข้อความ</td><td>Tooltip เมื่อ hover</td></tr>
+                <tr><td>download</td><td>ชื่อไฟล์</td><td>ดาวน์โหลดไฟล์</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="sub-title">Image &lt;img&gt; — แสดงรูปภาพ</div>
+          <pre><span class="tag">&lt;img</span> <span class="atr">src</span>=<span class="str">"รูป.jpg"</span> <span class="atr">alt</span>=<span class="str">"คำอธิบายรูป"</span><span class="tag">&gt;</span>
+<span class="tag">&lt;img</span> <span class="atr">src</span>=<span class="str">"https://example.com/img.png"</span> <span class="atr">alt</span>=<span class="str">"รูปจาก URL"</span> <span class="atr">width</span>=<span class="str">"300"</span><span class="tag">&gt;</span></pre>
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr><th>Attribute</th><th>คำอธิบาย</th></tr></thead>
+              <tbody>
+                <tr><td>src</td><td>ที่อยู่ของรูปภาพ (path หรือ URL)</td></tr>
+                <tr><td>alt</td><td>ข้อความแทนรูปถ้าโหลดไม่ได้ (สำคัญมาก)</td></tr>
+                <tr><td>width / height</td><td>ความกว้าง/สูง (px หรือ %)</td></tr>
+                <tr><td>loading="lazy"</td><td>โหลดเมื่อเลื่อนมาถึง — เร็วขึ้น</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 9 -->
+      <div class="section" id="s9">
+        <div class="sec-heading">9. Class &amp; ID</div>
+        <div class="sec-body">
+          <div class="sub-title">Class — ใช้กับหลาย element พร้อมกัน</div>
+          <pre><span class="tag">&lt;div</span> <span class="atr">class</span>=<span class="str">"card"</span><span class="tag">&gt;</span>...<span class="tag">&lt;/div&gt;</span>
+<span class="tag">&lt;p</span> <span class="atr">class</span>=<span class="str">"card highlight"</span><span class="tag">&gt;</span>...<span class="tag">&lt;/p&gt;</span></pre>
+          <div class="note">📌 element เดียวมีได้หลาย class โดยเว้นวรรคคั่น</div>
+          <div class="sub-title">ID — ใช้กับ element เดียวเท่านั้น</div>
+          <pre><span class="tag">&lt;div</span> <span class="atr">id</span>=<span class="str">"header"</span><span class="tag">&gt;</span>...<span class="tag">&lt;/div&gt;</span></pre>
+          <div class="note">📌 ID ต้องไม่ซ้ำกันในหน้าเดียวกัน — ใช้ # ใน CSS</div>
+        </div>
+      </div>
+
+      <!-- SECTION 10 -->
+      <div class="section" id="s10">
+        <div class="sec-heading">10. List Tags</div>
+        <div class="sec-body">
+          <pre><span class="tag">&lt;ul&gt;</span>
+  <span class="tag">&lt;li&gt;</span>รายการที่ 1<span class="tag">&lt;/li&gt;</span>
+  <span class="tag">&lt;li&gt;</span>รายการที่ 2<span class="tag">&lt;/li&gt;</span>
+<span class="tag">&lt;/ul&gt;</span>
+
+<span class="tag">&lt;ol&gt;</span>
+  <span class="tag">&lt;li&gt;</span>ขั้นตอนที่ 1<span class="tag">&lt;/li&gt;</span>
+  <span class="tag">&lt;li&gt;</span>ขั้นตอนที่ 2<span class="tag">&lt;/li&gt;</span>
+<span class="tag">&lt;/ol&gt;</span>
+
+<span class="tag">&lt;dl&gt;</span>
+  <span class="tag">&lt;dt&gt;</span>คำศัพท์<span class="tag">&lt;/dt&gt;</span>
+  <span class="tag">&lt;dd&gt;</span>คำอธิบาย<span class="tag">&lt;/dd&gt;</span>
+<span class="tag">&lt;/dl&gt;</span></pre>
+        </div>
+      </div>
+
+      <!-- SECTION 11 -->
+      <div class="section" id="s11">
+        <div class="sec-heading">11. Table</div>
+        <div class="sec-body">
+          <pre><span class="tag">&lt;table&gt;</span>
+  <span class="tag">&lt;thead&gt;</span><span class="tag">&lt;tr&gt;</span><span class="tag">&lt;th&gt;</span>หัวคอลัมน์ 1<span class="tag">&lt;/th&gt;</span><span class="tag">&lt;th&gt;</span>หัวคอลัมน์ 2<span class="tag">&lt;/th&gt;</span><span class="tag">&lt;/tr&gt;</span><span class="tag">&lt;/thead&gt;</span>
+  <span class="tag">&lt;tbody&gt;</span>
+    <span class="tag">&lt;tr&gt;</span><span class="tag">&lt;td&gt;</span>ข้อมูล 1<span class="tag">&lt;/td&gt;</span><span class="tag">&lt;td&gt;</span>ข้อมูล 2<span class="tag">&lt;/td&gt;</span><span class="tag">&lt;/tr&gt;</span>
+  <span class="tag">&lt;/tbody&gt;</span>
+<span class="tag">&lt;/table&gt;</span></pre>
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr><th>Tag</th><th>คำอธิบาย</th></tr></thead>
+              <tbody>
+                <tr><td>&lt;table&gt;</td><td>เริ่มต้นตาราง</td></tr>
+                <tr><td>&lt;thead&gt;</td><td>ส่วนหัวตาราง</td></tr>
+                <tr><td>&lt;tbody&gt;</td><td>เนื้อหาตาราง</td></tr>
+                <tr><td>&lt;tfoot&gt;</td><td>ส่วนท้ายตาราง</td></tr>
+                <tr><td>&lt;tr&gt;</td><td>แถว (Table Row)</td></tr>
+                <tr><td>&lt;th&gt;</td><td>เซลล์หัวตาราง (ตัวหนา)</td></tr>
+                <tr><td>&lt;td&gt;</td><td>เซลล์ข้อมูล</td></tr>
+                <tr><td>colspan / rowspan</td><td>รวมคอลัมน์ / รวมแถว</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 12 -->
+      <div class="section" id="s12">
+        <div class="sec-heading">12. Form &amp; Input</div>
+        <div class="sec-body">
+          <pre><span class="tag">&lt;form</span> <span class="atr">action</span>=<span class="str">"/submit"</span> <span class="atr">method</span>=<span class="str">"POST"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;input</span> <span class="atr">type</span>=<span class="str">"text"</span> <span class="atr">placeholder</span>=<span class="str">"ชื่อ"</span> <span class="atr">required</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;input</span> <span class="atr">type</span>=<span class="str">"email"</span> <span class="atr">placeholder</span>=<span class="str">"อีเมล"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;input</span> <span class="atr">type</span>=<span class="str">"password"</span> <span class="atr">placeholder</span>=<span class="str">"รหัสผ่าน"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;input</span> <span class="atr">type</span>=<span class="str">"checkbox"</span><span class="tag">&gt;</span> จำฉันไว้
+  <span class="tag">&lt;input</span> <span class="atr">type</span>=<span class="str">"radio"</span> <span class="atr">name</span>=<span class="str">"gender"</span> <span class="atr">value</span>=<span class="str">"male"</span><span class="tag">&gt;</span> ชาย
+  <span class="tag">&lt;textarea</span> <span class="atr">rows</span>=<span class="str">"4"</span><span class="tag">&gt;</span>ข้อความ<span class="tag">&lt;/textarea&gt;</span>
+  <span class="tag">&lt;select&gt;</span> <span class="tag">&lt;option</span> <span class="atr">value</span>=<span class="str">"th"</span><span class="tag">&gt;</span>ไทย<span class="tag">&lt;/option&gt;</span> <span class="tag">&lt;/select&gt;</span>
+  <span class="tag">&lt;button</span> <span class="atr">type</span>=<span class="str">"submit"</span><span class="tag">&gt;</span>ส่งข้อมูล<span class="tag">&lt;/button&gt;</span>
+<span class="tag">&lt;/form&gt;</span></pre>
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr><th>Input Type</th><th>การใช้งาน</th></tr></thead>
+              <tbody>
+                <tr><td>text</td><td>ข้อความทั่วไป</td></tr>
+                <tr><td>email</td><td>อีเมล (validate อัตโนมัติ)</td></tr>
+                <tr><td>password</td><td>รหัสผ่าน (ซ่อนตัวอักษร)</td></tr>
+                <tr><td>number</td><td>ตัวเลข</td></tr>
+                <tr><td>tel</td><td>เบอร์โทรศัพท์</td></tr>
+                <tr><td>date / time</td><td>วันที่ / เวลา</td></tr>
+                <tr><td>file</td><td>อัปโหลดไฟล์</td></tr>
+                <tr><td>checkbox</td><td>ติ๊กถูก (เลือกได้หลายอัน)</td></tr>
+                <tr><td>radio</td><td>เลือกอันเดียว</td></tr>
+                <tr><td>range</td><td>แถบเลื่อน</td></tr>
+                <tr><td>color</td><td>เลือกสี</td></tr>
+                <tr><td>hidden</td><td>ข้อมูลซ่อน</td></tr>
+                <tr><td>submit / reset</td><td>ปุ่มส่งข้อมูล / ปุ่มล้างข้อมูล</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 13 -->
+      <div class="section" id="s13">
+        <div class="sec-heading">13. &lt;div&gt; และ &lt;span&gt;</div>
+        <div class="sec-body">
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr><th>Tag</th><th>ประเภท</th><th>การใช้งาน</th></tr></thead>
+              <tbody>
+                <tr><td>&lt;div&gt;</td><td>Block Element</td><td>แบ่งส่วนเนื้อหา — กินพื้นที่เต็มบรรทัด</td></tr>
+                <tr><td>&lt;span&gt;</td><td>Inline Element</td><td>จัดการข้อความบางส่วน — ไม่ขึ้นบรรทัดใหม่</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <pre><span class="tag">&lt;div</span> <span class="atr">class</span>=<span class="str">"container"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;p&gt;</span>ข้อความ <span class="tag">&lt;span</span> <span class="atr">style</span>=<span class="str">"color:red"</span><span class="tag">&gt;</span>สีแดง<span class="tag">&lt;/span&gt;</span> ปกติ<span class="tag">&lt;/p&gt;</span>
+<span class="tag">&lt;/div&gt;</span></pre>
+        </div>
+      </div>
+
+      <!-- SECTION 14 -->
+      <div class="section" id="s14">
+        <div class="sec-heading">14. Inline vs Block Elements</div>
+        <div class="sec-body">
+          <div class="sub-title">📦 Block Elements</div>
+          <ul style="margin-left: 2rem; margin-bottom: 1rem;">
+            <li>เริ่มต้นบนบรรทัดใหม่เสมอ</li>
+            <li>กินพื้นที่เต็มความกว้างของ container</li>
+            <li>ตัวอย่าง: <code>&lt;div&gt;, &lt;p&gt;, &lt;h1&gt;-&lt;h6&gt;, &lt;ul&gt;, &lt;li&gt;, &lt;section&gt;, &lt;header&gt;, &lt;footer&gt;, &lt;article&gt;, &lt;nav&gt;, &lt;aside&gt;, &lt;table&gt;, &lt;form&gt;, &lt;hr&gt;</code></li>
+          </ul>
+          <div class="sub-title">📝 Inline Elements</div>
+          <ul style="margin-left: 2rem; margin-bottom: 1rem;">
+            <li>ไม่ขึ้นบรรทัดใหม่ — เรียงต่อกันในแนวนอน</li>
+            <li>กินพื้นที่เท่าเนื้อหาข้างใน</li>
+            <li>ตัวอย่าง: <code>&lt;span&gt;, &lt;a&gt;, &lt;strong&gt;, &lt;em&gt;, &lt;img&gt;, &lt;button&gt;, &lt;input&gt;, &lt;label&gt;, &lt;br&gt;, &lt;code&gt;, &lt;q&gt;, &lt;cite&gt;</code></li>
+          </ul>
+          <div class="sub-title">🔄 Inline-block</div>
+          <p><code>display: inline-block</code> ทำให้ element อยู่แนวเดียวกัน แต่กำหนด width/height ได้</p>
+          <pre><span class="tag">&lt;div&gt;</span>Div 1 (block)<span class="tag">&lt;/div&gt;</span><span class="tag">&lt;div&gt;</span>Div 2 (block)<span class="tag">&lt;/div&gt;</span>
+<span class="tag">&lt;span&gt;</span>Span A (inline)<span class="tag">&lt;/span&gt;</span><span class="tag">&lt;span&gt;</span>Span B (inline)<span class="tag">&lt;/span&gt;</span>
+<span class="tag">&lt;span</span> <span class="atr">style</span>=<span class="str">"display:inline-block; width:100px;"</span><span class="tag">&gt;</span>Inline-Block<span class="tag">&lt;/span&gt;</span></pre>
+          <div class="note">✨ การเปลี่ยนพฤติกรรมด้วย CSS: <code>display: block</code> หรือ <code>display: inline</code></div>
+        </div>
+      </div>
+
+      <!-- SECTION 15 -->
+      <div class="section" id="s15">
+        <div class="sec-heading">15. Text Formatting</div>
+        <div class="sec-body">
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr><th>Tag</th><th>ผลลัพธ์</th><th>คำอธิบาย</th></tr></thead>
+              <tbody>
+                <tr><td>&lt;b&gt;</td><td>ตัวหนา</td><td>Bold</td></tr>
+                <tr><td>&lt;strong&gt;</td><td>ตัวหนา</td><td>สำคัญมาก (SEO)</td></tr>
+                <tr><td>&lt;i&gt;</td><td>ตัวเอียง</td><td>Italic</td></tr>
+                <tr><td>&lt;em&gt;</td><td>ตัวเอียง</td><td>เน้นย้ำ (SEO)</td></tr>
+                <tr><td>&lt;u&gt;</td><td>ขีดเส้นใต้</td><td>Underline</td></tr>
+                <tr><td>&lt;s&gt;</td><td>ขีดฆ่า</td><td>Strikethrough</td></tr>
+                <tr><td>&lt;mark&gt;</td><td>ไฮไลท์</td><td></td></tr>
+                <tr><td>&lt;small&gt;</td><td>ตัวเล็ก</td><td></td></tr>
+                <tr><td>&lt;sup&gt;</td><td>ตัวยก</td><td>x²</td></tr>
+                <tr><td>&lt;sub&gt;</td><td>ตัวห้อย</td><td>H₂O</td></tr>
+                <tr><td>&lt;code&gt;</td><td>Code font</td><td></td></tr>
+                <tr><td>&lt;pre&gt;</td><td>รักษา format</td><td></td></tr>
+                <tr><td>&lt;blockquote&gt;</td><td>คำพูดอ้างอิง</td><td></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 16 -->
+      <div class="section" id="s16">
+        <div class="sec-heading">16. Media Elements</div>
+        <div class="sec-body">
+          <pre><span class="tag">&lt;video</span> <span class="atr">width</span>=<span class="str">'640'</span> <span class="atr">controls</span><span class="tag">&gt;</span><span class="tag">&lt;source</span> <span class="atr">src</span>=<span class="str">"video.mp4"</span> <span class="atr">type</span>=<span class="str">"video/mp4"</span><span class="tag">&gt;</span><span class="tag">&lt;/video&gt;</span>
+<span class="tag">&lt;audio</span> <span class="atr">controls</span><span class="tag">&gt;</span><span class="tag">&lt;source</span> <span class="atr">src</span>=<span class="str">"audio.mp3"</span> <span class="atr">type</span>=<span class="str">"audio/mpeg"</span><span class="tag">&gt;</span><span class="tag">&lt;/audio&gt;</span>
+<span class="tag">&lt;iframe</span> <span class="atr">src</span>=<span class="str">"https://www.youtube.com/embed/xxx"</span> <span class="atr">width</span>=<span class="str">"560"</span> <span class="atr">height</span>=<span class="str">"315"</span><span class="tag">&gt;&lt;/iframe&gt;</span></pre>
+        </div>
+      </div>
+
+      <!-- SECTION 17 -->
+      <div class="section" id="s17">
+        <div class="sec-heading">17. Meta Tags (SEO)</div>
+        <div class="sec-body">
+          <pre><span class="tag">&lt;meta</span> <span class="atr">charset</span>=<span class="str">"UTF-8"</span><span class="tag">&gt;</span>
+<span class="tag">&lt;meta</span> <span class="atr">name</span>=<span class="str">"description"</span> <span class="atr">content</span>=<span class="str">"คำอธิบายหน้าเว็บ"</span><span class="tag">&gt;</span>
+<span class="tag">&lt;meta</span> <span class="atr">name</span>=<span class="str">"keywords"</span> <span class="atr">content</span>=<span class="str">"คำค้นหา, keyword"</span><span class="tag">&gt;</span>
+<span class="tag">&lt;meta</span> <span class="atr">name</span>=<span class="str">"author"</span> <span class="atr">content</span>=<span class="str">"ชื่อผู้เขียน"</span><span class="tag">&gt;</span>
+<span class="tag">&lt;meta</span> <span class="atr">name</span>=<span class="str">"viewport"</span> <span class="atr">content</span>=<span class="str">"width=device-width, initial-scale=1.0"</span><span class="tag">&gt;</span>
+<span class="tag">&lt;meta</span> <span class="atr">property</span>=<span class="str">"og:title"</span> <span class="atr">content</span>=<span class="str">"ชื่อหน้าสำหรับ Social Media"</span><span class="tag">&gt;</span></pre>
+        </div>
+      </div>
+
+      <!-- SECTION 18 -->
+      <div class="section" id="s18">
+        <div class="sec-heading">18. Special Characters</div>
+        <div class="sec-body">
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr><th>Character</th><th>Entity Name</th><th>Entity Number</th><th>ผลลัพธ์</th></tr></thead>
+              <tbody>
+                <tr><td>(space)</td><td><code>&amp;nbsp;</code></td><td><code>&amp;#160;</code></td><td>Non-breaking space</td></tr>
+                <tr><td>&lt;</td><td><code>&amp;lt;</code></td><td><code>&amp;#60;</code></td><td>Less than</td></tr>
+                <tr><td>&gt;</td><td><code>&amp;gt;</code></td><td><code>&amp;#62;</code></td><td>Greater than</td></tr>
+                <tr><td>&amp;</td><td><code>&amp;amp;</code></td><td><code>&amp;#38;</code></td><td>Ampersand</td></tr>
+                <tr><td>"</td><td><code>&amp;quot;</code></td><td><code>&amp;#34;</code></td><td>Double quote</td></tr>
+                <tr><td>'</td><td><code>&amp;apos;</code></td><td><code>&amp;#39;</code></td><td>Apostrophe</td></tr>
+                <tr><td>©</td><td><code>&amp;copy;</code></td><td><code>&amp;#169;</code></td><td>Copyright</td></tr>
+                <tr><td>®</td><td><code>&amp;reg;</code></td><td><code>&amp;#174;</code></td><td>Registered</td></tr>
+                <tr><td>™</td><td><code>&amp;trade;</code></td><td><code>&amp;#8482;</code></td><td>Trademark</td></tr>
+                <tr><td>→</td><td><code>&amp;rarr;</code></td><td><code>&amp;#8594;</code></td><td>Right arrow</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="note">💡 ใช้ entity เพื่อแสดงอักขระที่ขัดแย้งกับ syntax HTML</div>
+        </div>
+      </div>
+
+      <!-- SECTION 19 -->
+      <div class="section" id="s19">
+        <div class="sec-heading">19. HTML Entities — การใช้งานจริง</div>
+        <div class="sec-body">
+          <div class="sub-title">🔧 ทำไมต้องใช้ HTML Entities?</div>
+          <p>ใช้ entity name/number เพื่อแสดงอักขระสงวน &lt;, &gt;, &amp; ฯลฯ</p>
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr><th>Entity Name</th><th>Entity Number</th><th>ลักษณะ</th><th>คำอธิบาย</th></tr></thead>
+              <tbody>
+                <tr><td><code>&amp;lt;</code></td><td><code>&amp;#60;</code></td><td>&lt;</td><td>น้อยกว่า</td></tr>
+                <tr><td><code>&amp;gt;</code></td><td><code>&amp;#62;</code></td><td>&gt;</td><td>มากกว่า</td></tr>
+                <tr><td><code>&amp;amp;</code></td><td><code>&amp;#38;</code></td><td>&amp;</td><td>Ampersand</td></tr>
+                <tr><td><code>&amp;quot;</code></td><td><code>&amp;#34;</code></td><td>"</td><td>อัญประกาศคู่</td></tr>
+                <tr><td><code>&amp;apos;</code></td><td><code>&amp;#39;</code></td><td>'</td><td>อัญประกาศเดี่ยว</td></tr>
+                <tr><td><code>&amp;nbsp;</code></td><td><code>&amp;#160;</code></td><td>&nbsp;</td><td>ช่องว่างไม่ตัดบรรทัด</td></tr>
+                <tr><td><code>&amp;copy;</code></td><td><code>&amp;#169;</code></td><td>©</td><td>ลิขสิทธิ์</td></tr>
+                <tr><td><code>&amp;reg;</code></td><td><code>&amp;#174;</code></td><td>®</td><td>จดทะเบียน</td></tr>
+                <tr><td><code>&amp;trade;</code></td><td><code>&amp;#8482;</code></td><td>™</td><td>การค้า</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="sub-title">💻 ตัวอย่าง</div>
+          <pre><span class="tag">&lt;p&gt;</span>x &amp;lt; y, y &amp;gt; z<span class="tag">&lt;/p&gt;</span>
+<span class="tag">&lt;p&gt;</span>Copyright &amp;copy; 2025 Apcl$21<span class="tag">&lt;/p&gt;</span>
+<span class="tag">&lt;p&gt;</span>&amp;nbsp;&amp;nbsp;เว้นวรรคไม่ตัดบรรทัด<span class="tag">&lt;/p&gt;</span>
+<span class="tag">&lt;p&gt;</span>ราคา: &amp;pound; 100, &amp;euro; 120<span class="tag">&lt;/p&gt;</span></pre>
+          <div class="note">💡 ป้องกันการตีความผิด และเพิ่มความปลอดภัย (XSS)</div>
+        </div>
+      </div>
+
+      <!-- SECTION 20 -->
+      <div class="section" id="s20">
+        <div class="sec-heading">20. Best Practices</div>
+        <div class="sec-body">
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr><th>หัวข้อ</th><th>คำแนะนำ</th></tr></thead>
+              <tbody>
+                <tr><td>VS Code / Emmet</td><td>พิมพ์ ! แล้วกด Tab ได้โครงสร้าง HTML ทันที</td></tr>
+                <tr><td>Indentation</td><td>เยื้อง 2 หรือ 4 space</td></tr>
+                <tr><td>Alt text</td><td>ใส่ alt ทุกครั้งใน &lt;img&gt;</td></tr>
+                <tr><td>Semantic HTML</td><td>ใช้ Semantic Tags แทน div</td></tr>
+                <tr><td>Validate</td><td><a href="https://validator.w3.org" target="_blank">validator.w3.org</a></td></tr>
+                <tr><td>DevTools</td><td>F12 เพื่อดีบัก</td></tr>
+                <tr><td>Close Tags</td><td>ปิด tag ทุกครั้ง ยกเว้น self-closing</td></tr>
+                <tr><td>lang attribute</td><td>lang="th" ใน &lt;html&gt;</td></tr>
+                <tr><td>Loading lazy</td><td>loading="lazy" ในรูป/iframe</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 21 : EMMET -->
+      <div class="section" id="s21">
+        <div class="sec-heading">21. Emmet for HTML — เขียนไวระดับเทพ</div>
+        <div class="sec-body">
+          <p><strong>Emmet</strong> เป็นปลั๊กอินใน VS Code, Sublime Text, Atom ที่ช่วยให้เขียน HTML/CSS ได้เร็ว โดยใช้ CSS selector syntax แล้วกด <kbd>Tab</kbd> หรือ <kbd>Enter</kbd> เพื่อขยายเป็นโค้ดจริง</p>
+          <div class="sub-title">🔥 Syntax พื้นฐาน</div>
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr><th>Emmet</th><th>ผลลัพธ์ (กด Tab)</th></tr></thead>
+              <tbody>
+                <tr><td><code>!</code> หรือ <code>html:5</code></td><td>โครงสร้าง HTML5 ครบ</td></tr>
+                <tr><td><code>div</code></td><td>&lt;div&gt;&lt;/div&gt;</td></tr>
+                <tr><td><code>a</code></td><td>&lt;a href=""&gt;&lt;/a&gt;</td></tr>
+                <tr><td><code>img</code></td><td>&lt;img src="" alt=""&gt;</td></tr>
+                <tr><td><code>ul>li*5</code></td><td>&lt;ul&gt;&lt;li&gt;&lt;/li&gt;…5 ตัว&lt;/ul&gt;</td></tr>
+                <tr><td><code>div.wrapper</code></td><td>&lt;div class="wrapper"&gt;&lt;/div&gt;</td></tr>
+                <tr><td><code>p#main</code></td><td>&lt;p id="main"&gt;&lt;/p&gt;</td></tr>
+                <tr><td><code>a[href=https://google.com]</code></td><td>&lt;a href="https://google.com"&gt;&lt;/a&gt;</td></tr>
+                <tr><td><code>lorem</code></td><td>ข้อความตัวอย่าง Lorem ipsum</td></tr>
+                <tr><td><code>lorem10</code></td><td>Lorem 10 คำ</td></tr>
+                <tr><td><code>ul>li.item$*3</code></td><td>class="item1", "item2", "item3"</td></tr>
+                <tr><td><code>a{click here}</code></td><td>&lt;a href=""&gt;click here&lt;/a&gt;</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="sub-title">📦 ตัวดำเนินการ (Operators)</div>
+          <ul style="margin-left: 2rem;">
+            <li><code>#</code> → id, <code>.</code> → class</li>
+            <li><code>></code> (ลูก), <code>+</code> (พี่น้อง), <code>^</code> (ขึ้นไปหนึ่งระดับ)</li>
+            <li><code>*</code> (คูณ), <code>()</code> (กลุ่ม)</li>
+            <li><code>$</code> (เลขเรียง), <code>@-</code> (เรียงจากมากไปน้อย)</li>
+          </ul>
+          <div class="sub-title">⚡ ตัวอย่าง Emmet ที่ใช้บ่อย</div>
+          <pre><span class="cmt">&lt;!-- Emmet: header>nav>ul>li*3>a --&gt;</span>
+<span class="tag">&lt;header&gt;&lt;nav&gt;&lt;ul&gt;&lt;li&gt;&lt;a</span> <span class="atr">href</span>=<span class="str">""</span><span class="tag">&gt;&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a</span> <span class="atr">href</span>=<span class="str">""</span><span class="tag">&gt;&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a</span> <span class="atr">href</span>=<span class="str">""</span><span class="tag">&gt;&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/nav&gt;&lt;/header&gt;</span>
+
+<span class="cmt">&lt;!-- Emmet: form.login-form>input:text+input:email+button[type=submit]{Send} --&gt;</span>
+<span class="tag">&lt;form</span> <span class="atr">action</span>=<span class="str">""</span> <span class="atr">class</span>=<span class="str">"login-form"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;input</span> <span class="atr">type</span>=<span class="str">"text"</span> <span class="atr">name</span>=<span class="str">""</span> <span class="atr">id</span>=<span class="str">""</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;input</span> <span class="atr">type</span>=<span class="str">"email"</span> <span class="atr">name</span>=<span class="str">""</span> <span class="atr">id</span>=<span class="str">""</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;button</span> <span class="atr">type</span>=<span class="str">"submit"</span><span class="tag">&gt;</span>Send<span class="tag">&lt;/button&gt;</span>
+<span class="tag">&lt;/form&gt;</span>
+
+<span class="cmt">&lt;!-- ใช้ lorem สร้างข้อความตัวอย่าง --&gt;</span>
+<span class="tag">&lt;p&gt;</span>Lorem ipsum dolor sit amet consectetur adipisicing elit.<span class="tag">&lt;/p&gt;</span></pre>
+          <div class="note">💡 Emmet ทำงานได้ทั้งใน HTML, CSS, JSX, Vue template ฯลฯ ช่วยเพิ่มความเร็วในการพัฒนาเว็บอย่างมาก</div>
+        </div>
+      </div>
+
+      <!-- SECTION 22 : HTML5 FEATURES -->
+      <div class="section" id="s22">
+        <div class="sec-heading">22. HTML5 Features (API &amp; Elements)</div>
+        <div class="sec-body">
+          <p>HTML5 นำเสนอ API และ element ใหม่ๆ ที่ช่วยให้เว็บแอปพลิเคชันมีประสิทธิภาพมากขึ้น โดยไม่ต้องพึ่งปลั๊กอิน (Flash, Silverlight)</p>
+          <div class="sub-title">📦 Web Storage (localStorage &amp; sessionStorage)</div>
+          <p>เก็บข้อมูลฝั่ง client ได้มากกว่า cookie (5-10MB) และไม่ต้องส่งไปกับ request ทุกครั้ง</p>
+          <pre><span class="cmt">// เก็บข้อมูล</span>
+localStorage.setItem('key', 'value');
+sessionStorage.setItem('temp', 'data');
+
+<span class="cmt">// อ่านข้อมูล</span>
+let val = localStorage.getItem('key');
+
+<span class="cmt">// ลบ</span>
+localStorage.removeItem('key');
+localStorage.clear();</pre>
+
+          <div class="sub-title">🎨 Canvas &amp; SVG</div>
+          <p><strong>Canvas</strong> ใช้ JavaScript วาดกราฟิก 2D แบบ pixel เหมาะกับเกม, กราฟ, ภาพเคลื่อนไหว<br>
+          <strong>SVG</strong> (Scalable Vector Graphics) ใช้ XML วาดรูป vector ขยาย size ไม่แตก เหมาะกับไอคอน, แผนที่</p>
+          <pre><span class="tag">&lt;canvas</span> <span class="atr">id</span>=<span class="str">"myCanvas"</span> <span class="atr">width</span>=<span class="str">"200"</span> <span class="atr">height</span>=<span class="str">"100"</span><span class="tag">&gt;&lt;/canvas&gt;</span>
+<span class="tag">&lt;svg</span> <span class="atr">width</span>=<span class="str">"100"</span> <span class="atr">height</span>=<span class="str">"100"</span><span class="tag">&gt;&lt;circle</span> <span class="atr">cx</span>=<span class="str">"50"</span> <span class="atr">cy</span>=<span class="str">"50"</span> <span class="atr">r</span>=<span class="str">"40"</span> <span class="atr">fill</span>=<span class="str">"red"</span><span class="tag">/&gt;&lt;/svg&gt;</span></pre>
+
+          <div class="sub-title">📍 Geolocation</div>
+          <p>เข้าถึงตำแหน่งทางภูมิศาสตร์ของผู้ใช้ (ต้องได้รับอนุญาต)</p>
+          <pre>navigator.geolocation.getCurrentPosition((pos) => {
+  console.log(pos.coords.latitude, pos.coords.longitude);
+});</pre>
+
+          <div class="sub-title">🖱️ Drag-and-Drop API</div>
+          <p>ทำให้ element สามารถลากและวางได้</p>
+          <pre><span class="tag">&lt;div</span> <span class="atr">draggable</span>=<span class="str">"true"</span> <span class="atr">ondragstart</span>=<span class="str">"drag(event)"</span><span class="tag">&gt;</span>ลากฉันได้<span class="tag">&lt;/div&gt;</span>
+<span class="tag">&lt;div</span> <span class="atr">ondrop</span>=<span class="str">"drop(event)"</span> <span class="atr">ondragover</span>=<span class="str">"allowDrop(event)"</span><span class="tag">&gt;&lt;/div&gt;</span></pre>
+
+          <div class="sub-title">⚙️ Web Workers</div>
+          <p>ทำงาน background โดยไม่กระทบ UI (เหมาะกับงานหนัก)</p>
+          <pre><span class="cmt">// main.js</span>
+const worker = new Worker('worker.js');
+worker.postMessage('start');
+worker.onmessage = (e) => console.log(e.data);</pre>
+
+          <div class="sub-title">🔄 History API (pushState, replaceState)</div>
+          <p>เปลี่ยน URL แบบไม่รีเฟรชหน้า เหมาะกับ Single Page Application</p>
+          <pre>history.pushState({page: 2}, "title 2", "/page2");</pre>
+
+          <div class="sub-title">📡 Server-Sent Events (SSE)</div>
+          <p>รับข้อมูลจาก server แบบ real-time (server push) เหมาะกับ notification, stock update</p>
+          <pre>const evtSource = new EventSource("/stream");
+evtSource.onmessage = (e) => console.log(e.data);</pre>
+
+          <div class="sub-title">🎬 Audio / Video API ขั้นสูง</div>
+          <p>ควบคุมการเล่นแบบ JavaScript เช่น .play(), .pause(), .currentTime, volume</p>
+
+          <div class="sub-title">🧩 Web Components (Custom Elements, Shadow DOM)</div>
+          <p>สร้าง element ใหม่ reusable ได้เอง</p>
+
+          <div class="sub-title">📱 Responsive Images (srcset, picture element)</div>
+          <pre><span class="tag">&lt;img</span> <span class="atr">srcset</span>=<span class="str">"img-small.jpg 480w, img-large.jpg 1080w"</span> <span class="atr">sizes</span>=<span class="str">"100vw"</span><span class="tag">&gt;</span></pre>
+
+          <div class="note">💡 HTML5 ยังมีอีกมาก: Microdata, ARIA roles, ContentEditable, Spellcheck, WebSocket, Fullscreen API, Battery API, Vibration API ฯลฯ ศึกษาเพิ่มเติมได้ที่ MDN Web Docs</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="doc-footer">
+    <div class="left">Apcl$21 • HTML Reference — ครบจบในที่เดียว (Emmet + HTML5 Features + Entities)</div>
+    <div class="right">อ้างอิง: MDN Web Docs • W3C Spec • Emmet.io • WHATWG</div>
+  </footer>
+</div>
+
+</body>
+</html>
